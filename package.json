@@ -1,6 +1,6 @@
 {
   "name": "compose-state",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "compose setState updaters",
   "main": "dist.js",
   "license": "MIT",
