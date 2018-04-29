@@ -1,81 +1,254 @@
 import React, { Component } from "react";
 import renderer from "react-test-renderer";
-import composeState from ".";
+import { composeState, composeDerivedStateFromProps } from ".";
 
-const t = ({ updaters = [], state } = {}) => () => {
-  class TestComponent extends Component {
-    state = state;
-    render = () => null;
-  }
+const setState = ({ name, expected, updaters = [], state, props } = {}) => {
+  test(`composeState ${name}`, () => {
+    const getInstance = () => {
+      class TestComponent extends Component {
+        state = state;
+        render = () => null;
+      }
+      return renderer.create(<TestComponent {...props} />).getInstance();
+    };
 
-  const withoutCompose = renderer.create(<TestComponent />).getInstance();
-  const withCompose = renderer.create(<TestComponent />).getInstance();
+    const withoutCompose = getInstance();
+    const withCompose = getInstance();
 
-  updaters.forEach(updater => {
-    withoutCompose.setState(updater);
+    [...updaters].reverse().forEach(updater => {
+      withoutCompose.setState(updater);
+    });
+
+    withCompose.setState(composeState(...updaters));
+
+    expect(withCompose.state).toEqual(expected);
+    expect(withCompose.state).toEqual(withoutCompose.state);
   });
-
-  withCompose.setState(composeState(...updaters));
-
-  expect(withCompose.state).toEqual(withoutCompose.state);
 };
 
-test("no value", t());
-test("no value, default state", t({ state: { value: 0 } }));
-test("empty object", t({ updaters: [{}] }));
-test("empty object, default state", t({ updaters: [{}], state: { value: 0 } }));
-test("object", t({ updaters: [{ value: 1 }] }));
-test(
-  "object, update property",
-  t({ updaters: [{ value: 1 }], state: { value: 0 } }),
-);
-test(
-  "object, update other property",
-  t({ updaters: [{ value: 1 }], state: { otherValue: 0 } }),
-);
-test("null function", t({ updaters: [() => null] }));
-test(
-  "null function, default state",
-  t({ updaters: [() => null], state: { value: 0 } }),
-);
-test("function", t({ updaters: [() => ({ value: 1 })] }));
-test(
-  "function, default state",
-  t({ updaters: [() => ({ value: 1 })], state: { value: 0 } }),
-);
-test(
-  "function, update property",
-  t({ updaters: [() => ({ value: 1 })], state: { value: 0 } }),
-);
-test(
-  "function, other property",
-  t({ updaters: [() => ({ value: 1 })], state: { otherValue: 0 } }),
-);
-test(
-  "function, update prevState",
-  t({
-    updaters: [s => ({ value: s.value + 1 })],
-    state: { value: 0 },
-  }),
-);
-test(
-  "function, update prevState, keep other property",
-  t({
-    updaters: [s => ({ value: s.value + 1 })],
-    state: { value: 0, otherValue: -1 },
-  }),
-);
-test(
-  "function, update prevState multiple times",
-  t({
-    updaters: Array.from(Array(5), () => s => ({ value: s.value + 1 })),
-    state: { value: 0 },
-  }),
-);
-test(
-  "function, update prevState multiple times, keep other property",
-  t({
-    updaters: Array.from(Array(5), () => s => ({ value: s.value + 1 })),
-    state: { value: 0, otherValue: -1 },
-  }),
-);
+const deriveState = ({
+  name,
+  expected,
+  updaters = [],
+  state = {},
+  props,
+} = {}) => {
+  test(`composeDerivedStateFromProps ${name}`, () => {
+    const getInstance = () => {
+      class TestComponent extends Component {
+        static getDerivedStateFromProps = composeDerivedStateFromProps(
+          ...updaters,
+        );
+        state = state;
+        render = () => null;
+      }
+      return renderer.create(<TestComponent {...props} />).getInstance();
+    };
+
+    const withCompose = getInstance();
+
+    expect(withCompose.state).toEqual(expected);
+  });
+};
+
+setState({
+  name: "no value",
+  expected: null,
+});
+setState({
+  name: "no value, default state",
+  expected: { value: 0 },
+  state: { value: 0 },
+});
+setState({ name: "empty object", expected: {}, updaters: [{}] });
+setState({
+  name: "empty object, default state",
+  expected: { value: 0 },
+  updaters: [{}],
+  state: { value: 0 },
+});
+setState({ name: "object", expected: { value: 1 }, updaters: [{ value: 1 }] });
+setState({
+  name: "object, update property",
+  expected: { value: 1 },
+  updaters: [{ value: 1 }],
+  state: { value: 0 },
+});
+setState({
+  name: "object, update other property",
+  expected: { otherValue: 0, value: 1 },
+  updaters: [{ value: 1 }],
+  state: { otherValue: 0 },
+});
+setState({ name: "null function", expected: null, updaters: [() => null] });
+setState({
+  name: "null function, default state",
+  expected: { value: 0 },
+  updaters: [() => null],
+  state: { value: 0 },
+});
+setState({
+  name: "function",
+  expected: { value: 1 },
+  updaters: [() => ({ value: 1 })],
+});
+setState({
+  name: "function, default state",
+  expected: { value: 1 },
+  updaters: [() => ({ value: 1 })],
+  state: { value: 0 },
+});
+setState({
+  name: "function, update property",
+  expected: { value: 1 },
+  updaters: [() => ({ value: 1 })],
+  state: { value: 0 },
+});
+setState({
+  name: "function, other property",
+  expected: { otherValue: 0, value: 1 },
+  updaters: [() => ({ value: 1 })],
+  state: { otherValue: 0 },
+});
+setState({
+  name: "function, update prevState",
+  expected: { value: 1 },
+  updaters: [s => ({ value: s.value + 1 })],
+  state: { value: 0 },
+});
+setState({
+  name: "function, update prevState, keep other state",
+  expected: { value: 1, otherValue: -1 },
+  updaters: [s => ({ value: s.value + 1 })],
+  state: { value: 0, otherValue: -1 },
+});
+setState({
+  name: "function, update prevState multiple times",
+  expected: { value: 5 },
+  updaters: Array.from(Array(5), () => s => ({ value: s.value + 1 })),
+  state: { value: 0 },
+});
+setState({
+  name: "function, update prevState multiple times, keep other state",
+  expected: { value: 5, otherValue: -1 },
+  updaters: Array.from(Array(5), () => s => ({ value: s.value + 1 })),
+  state: { value: 0, otherValue: -1 },
+});
+setState({
+  name: "object then function",
+  expected: { value: 1, otherValue: 1 },
+  updaters: [s => ({ value: s.value + 1 }), { otherValue: 1 }],
+  state: { value: 0 },
+});
+setState({
+  name: "function then object",
+  expected: { value: 1, otherValue: 1 },
+  updaters: [{ otherValue: 1 }, s => ({ value: s.value + 1 })],
+  state: { value: 0 },
+});
+setState({
+  name: "function then object then function",
+  expected: { value: 2, otherValue: 1 },
+  updaters: [
+    s => ({ value: s.value + 1 }),
+    { otherValue: 1 },
+    s => ({ value: s.value + 1 }),
+  ],
+  state: { value: 0 },
+});
+setState({
+  name: "object then function then object",
+  expected: { value: 1, anotherValue: 2, otherValue: 1 },
+  updaters: [
+    { otherValue: 1 },
+    s => ({ value: s.value + 1 }),
+    { anotherValue: 2 },
+  ],
+  state: { value: 0 },
+});
+setState({
+  name: "times2, plus1",
+  expected: { value: 2 },
+  updaters: [s => ({ value: s.value * 2 }), s => ({ value: s.value + 1 })],
+  state: { value: 0 },
+});
+setState({
+  name: "times2, plus1, keep other state",
+  expected: { value: 2, otherValue: 420 },
+  updaters: [s => ({ value: s.value * 2 }), s => ({ value: s.value + 1 })],
+  state: { value: 0, otherValue: 420 },
+});
+setState({
+  name: "null, times2, plus1",
+  expected: { value: null },
+  updaters: [
+    s => ({ value: null }),
+    s => ({ value: s.value * 2 }),
+    s => ({ value: s.value + 1 }),
+  ],
+  state: { value: 0 },
+});
+setState({
+  name: "times2, plus1, otherValueTimes2",
+  expected: { value: 2, otherValue: 4 },
+  updaters: [
+    s => ({ value: s.value * 2 }),
+    s => ({ value: s.value + 1 }),
+    s => ({ otherValue: s.otherValue * 2 }),
+  ],
+  state: { value: 0, otherValue: 2 },
+});
+setState({
+  name: "props",
+  expected: { value: 1 },
+  updaters: [(s, p) => ({ value: s.value + p.value })],
+  state: { value: 0 },
+  props: { value: 1 },
+});
+setState({
+  name: "props multiple times",
+  expected: { value: 5 },
+  updaters: Array.from(Array(5), () => (s, p) => ({
+    value: s.value + p.value,
+  })),
+  state: { value: 0 },
+  props: { value: 1 },
+});
+deriveState({ name: "no value", expected: {} });
+deriveState({
+  name: "no value, default state",
+  expected: { value: 0 },
+  state: { value: 0 },
+});
+deriveState({ name: "empty object", expected: {}, updaters: [{}] });
+deriveState({
+  name: "from state: times2, plus1, otherValueTimes2",
+  expected: { value: 2, otherValue: 4 },
+  updaters: [
+    (p, s) => ({ value: s.value * 2 }),
+    (p, s) => ({ value: s.value + 1 }),
+    (p, s) => ({ otherValue: s.otherValue * 2 }),
+  ],
+  state: { value: 0, otherValue: 2 },
+});
+deriveState({
+  name: "object",
+  expected: { value: 1 },
+  updaters: [{ value: 1 }],
+});
+deriveState({
+  name: "object, other object",
+  expected: { value: 1, otherValue: 1 },
+  updaters: [{ value: 1 }, { otherValue: 1 }],
+});
+deriveState({
+  name: "from props: times2, times2, plus1, otherValueTimes2",
+  expected: { value: 4, otherValue: 4 },
+  updaters: [
+    (p, s) => ({ value: s.value * 2 }),
+    (p, s) => ({ value: s.value * 2 }),
+    p => ({ value: p.value + 1 }),
+    p => ({ otherValue: p.otherValue * 2 }),
+  ],
+  props: { value: 0, otherValue: 2 },
+});
