@@ -214,6 +214,12 @@ setState({
   state: { value: 0 },
   props: { value: 1 },
 });
+setState({
+  name: "null updaters, default state",
+  expected: { value: 1 },
+  updaters: [() => null],
+  state: { value: 1 },
+});
 deriveState({ name: "no value", expected: {} });
 deriveState({
   name: "no value, default state",
