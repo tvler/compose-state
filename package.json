@@ -2,7 +2,7 @@
   "name": "compose-state",
   "version": "1.0.1",
   "description": "compose setState updaters",
-  "main": "index.js",
+  "main": "dist.js",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -22,11 +22,7 @@
     "test": "jest --watch test.js"
   },
   "babel": {
-    "presets": [
-      "minify",
-      "env",
-      "react"
-    ],
+    "presets": ["minify", "env", "react"],
     "plugins": [
       "transform-class-properties",
       "babel-plugin-transform-object-rest-spread"

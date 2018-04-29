@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import renderer from "react-test-renderer";
-import { composeState, composeDerivedStateFromProps } from ".";
+import { composeState, composeDerivedStateFromProps } from "./index.js";
 
 const setState = ({ name, expected, updaters = [], state, props } = {}) => {
   test(`composeState ${name}`, () => {
