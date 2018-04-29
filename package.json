@@ -1,0 +1,24 @@
+{
+  "name": "compose-state",
+  "version": "1.0.0",
+  "description": "compose setState function or object updaters",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^22.4.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "jest": "^22.4.3",
+    "react": "^16.3.2",
+    "react-test-renderer": "^16.3.2"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "babel": {
+    "presets": ["env", "react"],
+    "plugins": ["transform-class-properties"]
+  }
+}
