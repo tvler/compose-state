@@ -24,13 +24,13 @@ this.setState(composeState(times2, add1));
 
 # Usage
 
-```
-import composeState from 'compose-state';
+```jsx
+import composeState from "compose-state";
 
 // or
 
 import {
   composeState,
   composeDerivedStateFromProps
-} from 'compose-state';
+} from "compose-state";
 ```
