@@ -1,7 +1,8 @@
 {
   "name": "compose-state",
   "version": "1.0.4",
-  "description": "compose setState updaters",
+  "description":
+    "Compose multiple setState or getDerivedStateFromProps updaters in React",
   "main": "dist.js",
   "license": "MIT",
   "devDependencies": {
@@ -22,11 +23,7 @@
     "test": "jest --watch test.js"
   },
   "babel": {
-    "presets": [
-      "minify",
-      "env",
-      "react"
-    ],
+    "presets": ["minify", "env", "react"],
     "plugins": [
       "transform-class-properties",
       "babel-plugin-transform-object-rest-spread"

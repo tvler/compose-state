@@ -223,7 +223,36 @@ setState({
 setState({
   name: "function of one state prop, function of other state prop",
   expected: { value: 2, otherValue: 2 },
-  updaters: [s => ({value: s.value + 1}), s => ({otherValue: s.otherValue + 1})],
+  updaters: [
+    s => ({ value: s.value + 1 }),
+    s => ({ otherValue: s.otherValue + 1 }),
+  ],
+  state: { value: 1, otherValue: 1 },
+});
+setState({
+  name: "object, function of one state prop, function of other state prop",
+  expected: { value: 2, otherValue: 2, anotherValue: 1 },
+  updaters: [
+    s => ({ value: s.value + 1 }),
+    s => ({ otherValue: s.otherValue + 1 }),
+    { anotherValue: 1 },
+  ],
+  state: { value: 1, otherValue: 1 },
+});
+setState({
+  name: "function of one state prop, function of other state prop, object",
+  expected: { value: 2, otherValue: 2, anotherValue: 1 },
+  updaters: [
+    { anotherValue: 1 },
+    s => ({ value: s.value + 1 }),
+    s => ({ otherValue: s.otherValue + 1 }),
+  ],
+  state: { value: 1, otherValue: 1 },
+});
+setState({
+  name: "objects",
+  expected: { value: 1, otherValue: 1, anotherValue: 1 },
+  updaters: [{ anotherValue: 1 }, { value: 1 }, { otherValue: 1 }],
   state: { value: 1, otherValue: 1 },
 });
 deriveState({ name: "no value", expected: {} });
