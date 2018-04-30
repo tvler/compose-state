@@ -10,9 +10,7 @@ const composeStateFactory = stateIndex => (...updaters) =>
           ...args.slice(stateIndex + 1),
         );
 
-        return currentState
-          ? { ...args[stateIndex], ...accumulatedState, ...currentState }
-          : null;
+        return currentState ? { ...accumulatedState, ...currentState } : null;
       },
       () => null,
     );

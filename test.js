@@ -220,6 +220,12 @@ setState({
   updaters: [() => null],
   state: { value: 1 },
 });
+setState({
+  name: "function of one state prop, function of other state prop",
+  expected: { value: 2, otherValue: 2 },
+  updaters: [s => ({value: s.value + 1}), s => ({otherValue: s.otherValue + 1})],
+  state: { value: 1, otherValue: 1 },
+});
 deriveState({ name: "no value", expected: {} });
 deriveState({
   name: "no value, default state",
