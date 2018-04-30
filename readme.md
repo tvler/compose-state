@@ -1,5 +1,7 @@
 # ✍️ compose-state
 
+<img width="488" src="https://user-images.githubusercontent.com/4934193/39415579-e91ed03e-4bf9-11e8-850f-415d7f784043.png" alt="example" />
+
 `compose-state` is a library to compose multiple `setState` or `getDerivedStateFromProps` updaters in React.
 
 ```jsx
