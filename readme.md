@@ -12,6 +12,19 @@
 
 `npm install --save compose-state`
 
+# Use
+
+```jsx
+import composeState from 'compose-state';
+
+// or
+
+import {
+  composeState,
+  composeDerivedStateFromProps,
+} from 'compose-state';
+```
+
 # Benefits
 
 ## Simplify your updaters and React code
@@ -95,19 +108,6 @@ class App extends Component {
   )
   // ...
 }
-```
-
-# Usage
-
-```jsx
-import composeState from 'compose-state';
-
-// or
-
-import {
-  composeState,
-  composeDerivedStateFromProps,
-} from 'compose-state';
 ```
 
 # Further reading
