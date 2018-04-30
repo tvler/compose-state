@@ -1,4 +1,4 @@
-# compose-state
+# ✍️ compose-state
 
 `compose-state` is a library to compose multiple `setState` or `getDerivedStateFromProps` updaters in React.
 
