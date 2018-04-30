@@ -1,20 +1,8 @@
 # ✍️ compose-state
 
-<img width="488" src="https://user-images.githubusercontent.com/4934193/39415633-8ed13b02-4bfa-11e8-9e0e-b706ae68fdbc.png" alt="example" />
-
 `compose-state` is a library to compose multiple `setState` or `getDerivedStateFromProps` updaters in React.
 
-```jsx
-const add1 = s => ({ value: s.value + 1 });
-const times2 = s => ({ value: s.value * 2 });
-
-// This
-this.setState(add1);
-this.setState(times2);
-
-// Is the same as
-this.setState(composeState(times2, add1));
-```
+<img width="488" src="https://user-images.githubusercontent.com/4934193/39415633-8ed13b02-4bfa-11e8-9e0e-b706ae68fdbc.png" alt="example" />
 
 `compose-state` accepts any valid `setState` parameters – objects, functions, or `null` – and executes them in the standard compositional right-to-left order.
 
