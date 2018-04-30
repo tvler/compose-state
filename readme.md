@@ -18,8 +18,8 @@
 
 Let's say you want to call `setState` and do two things
 
-1. Increment a score value in your state by 1
-2. Log the current time to an array in your state
+1. Increment a score value by 1
+2. Log the current time to an array
 
 Both of these updaters need to be functional, since they rely on the previous state for their return values.
 
