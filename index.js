@@ -15,6 +15,7 @@ const composeStateFactory = stateIndex => (...updaters) =>
       () => null,
     );
 
-export const composeState = composeStateFactory(0);
-export const composeDerivedStateFromProps = composeStateFactory(1);
-export default composeState;
+const composeState = composeStateFactory(0);
+const composeDerivedStateFromProps = composeStateFactory(1);
+
+export { composeState, composeDerivedStateFromProps, composeState as default };

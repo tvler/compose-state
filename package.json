@@ -1,5 +1,11 @@
 {
   "name": "compose-state",
+  "repository": "https://github.com/tvler/compose-state",
+  "author": "Tyler Deitz <tylerdeitz@gmail.com>",
+  "keywords": ["react", "functional-programming", "javascript"],
+  "bugs": {
+    "url": "https://github.com/tvler/compose-state/issues"
+  },
   "version": "1.0.4",
   "description":
     "Compose multiple setState or getDerivedStateFromProps updaters in React",
@@ -23,7 +29,16 @@
     "test": "jest --watch test.js"
   },
   "babel": {
-    "presets": ["minify", "env", "react"],
+    "presets": [
+      "env",
+      [
+        "minify",
+        {
+          "mangle": { "topLevel": true }
+        }
+      ],
+      "react"
+    ],
     "plugins": [
       "transform-class-properties",
       "babel-plugin-transform-object-rest-spread"

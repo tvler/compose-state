@@ -135,6 +135,34 @@ setState({
   state: { value: 0, otherValue: -1 },
 });
 setState({
+  name: "function, update multiple times, update other state",
+  expected: { value: 5, other: 1 },
+  updaters: [
+    s => ({ other: s.other + 1 }),
+    ...Array.from(Array(5), () => s => ({ value: s.value + 1 })),
+  ],
+  state: { value: 0, other: 0 },
+});
+setState({
+  name:
+    "function, update multiple times, update other state, keep another default state",
+  expected: { value: 5, other: 1, another: -1 },
+  updaters: [
+    s => ({ other: s.other + 1 }),
+    ...Array.from(Array(5), () => s => ({ value: s.value + 1 })),
+  ],
+  state: { value: 0, other: 0, another: -1 },
+});
+setState({
+  name: "function, update other state, update multiple times",
+  expected: { value: 5, other: 1 },
+  updaters: [
+    ...Array.from(Array(5), () => s => ({ value: s.value + 1 })),
+    s => ({ other: s.other + 1 }),
+  ],
+  state: { value: 0, other: 0 },
+});
+setState({
   name: "object then function",
   expected: { value: 1, otherValue: 1 },
   updaters: [s => ({ value: s.value + 1 }), { otherValue: 1 }],
