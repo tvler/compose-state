@@ -2,13 +2,16 @@
   "name": "compose-state",
   "repository": "https://github.com/tvler/compose-state",
   "author": "Tyler Deitz <tylerdeitz@gmail.com>",
-  "keywords": ["react", "functional-programming", "javascript"],
+  "keywords": [
+    "react",
+    "functional-programming",
+    "javascript"
+  ],
   "bugs": {
     "url": "https://github.com/tvler/compose-state/issues"
   },
-  "version": "1.0.4",
-  "description":
-    "Compose multiple setState or getDerivedStateFromProps updaters in React",
+  "version": "1.0.5",
+  "description": "Compose multiple setState or getDerivedStateFromProps updaters in React",
   "main": "dist.js",
   "license": "MIT",
   "devDependencies": {
@@ -34,7 +37,9 @@
       [
         "minify",
         {
-          "mangle": { "topLevel": true }
+          "mangle": {
+            "topLevel": true
+          }
         }
       ],
       "react"
