@@ -185,12 +185,24 @@ setState({
   state: { value: 0 },
 });
 setState({
-  name: "object then function then object",
+  name: "bunch of stuff then null",
+  expected: { value: 1, anotherValue: 2, otherValue: 1 },
+  updaters: [
+    () => null,
+    { otherValue: 1 },
+    s => ({ value: s.value + 1 }),
+    { anotherValue: 2 },
+  ],
+  state: { value: 0 },
+});
+setState({
+  name: "null then bunch of stuff",
   expected: { value: 1, anotherValue: 2, otherValue: 1 },
   updaters: [
     { otherValue: 1 },
     s => ({ value: s.value + 1 }),
     { anotherValue: 2 },
+    () => null,
   ],
   state: { value: 0 },
 });
