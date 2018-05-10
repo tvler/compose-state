@@ -37,31 +37,14 @@ Returns an updater that can be used with `setState`. Calling this produces the s
 | - | - | - |
 | `[updaters]` | `(...Updater)` | Functions that can be used with `setState`, or partial state objects |
 
-##### Example
-
-```jsx
-// Current state: { value: 0 }
-
-const add1 = s => ({ value: s.value + 1 });
-
-this.setState(composeState(add1, add1, add1));
-
-// This is the same as
-// this.setState(add1);
-// this.setState(add1);
-// this.setState(add1);
-
-// New state: { value: 3 }
-```
-
 #### `composeDerivedStateFromProps([updaters])`
 
 Returns an updater that can be set as a component's `getDerivedStateFromProps` static value. Calling this produces the same result as calling or accessing each given updater from right to left, merging each partial state. If a given updater is a function, its `prevState` value is the previous state merged with the current partial state.
 
 ##### Arguments
 
-| Name      | Type   | Description |
-| --------- | ------ | ----------- |
+| Name | Type | Description |
+| - | - | - |
 | `[updaters]` | `(...Updater)` | Functions that can be set as a component's `getDerivedStateFromProps` static value, or partial state objects |
 
 ## Benefits
