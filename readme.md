@@ -1,18 +1,14 @@
 # ✍️ compose-state
 
-`compose-state` is a library to compose multiple `setState` or `getDerivedStateFromProps` updaters in React.
-
-`compose-state` accepts any valid updaters – objects or functions – and executes them in the standard compositional right-to-left order.
+`compose-state` is a library to compose multiple state updaters in React.
 
 <img width="488" src="https://user-images.githubusercontent.com/4934193/39415633-8ed13b02-4bfa-11e8-9e0e-b706ae68fdbc.png" alt="example" />
 
-# Install
-
-`yarn add compose-state`
-
-`npm install --save compose-state`
+`compose-state` works with the standard `setState` parameters – objects or functions – so you don’t have to learn any new syntax. It’s also compatible with React’s new [`getDerivedStateFromProps`](https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops) lifecycle method.
 
 # Use
+
+`yarn add compose-state` or `npm install compose-state`
 
 ```jsx
 import composeState from 'compose-state';
@@ -92,7 +88,7 @@ this.setState(
 
 ## Compatibility with getDerivedStateFromProps
 
-`compose-state` comes with a `composeDerivedStateFromProps` function to use with React's new [getDerivedStateFromProps](https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops) lifecycle method.
+`compose-state` comes with a `composeDerivedStateFromProps` function to use with React's new [`getDerivedStateFromProps`](https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops) lifecycle method.
 
 ```jsx
 const updater1 = (nextProps, prevState) => {
@@ -109,6 +105,12 @@ class App extends Component {
   // ...
 }
 ```
+
+## It's just normal, [boring](https://twitter.com/jevakallio/status/987062864002342912) React
+
+While more formal state managers push developers away from controlling state in React, `compose-state` simply enhances state control methods that are primitive to the platform.
+
+`compose-state` is a lot like [Classnames](https://github.com/JedWatson/classnames). It's a helper function that makes `setState` calls more declarative and easier to construct, just like how Classnames is a helper function that makes `className` values more declarative and easier to construct.
 
 # Further reading
 
