@@ -188,7 +188,7 @@ setState({
   name: "bunch of stuff then null",
   expected: { value: 1, anotherValue: 2, otherValue: 1 },
   updaters: [
-    () => null,
+    null,
     { otherValue: 1 },
     s => ({ value: s.value + 1 }),
     { anotherValue: 2 },
@@ -202,7 +202,7 @@ setState({
     { otherValue: 1 },
     s => ({ value: s.value + 1 }),
     { anotherValue: 2 },
-    () => null,
+    null,
   ],
   state: { value: 0 },
 });
