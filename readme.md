@@ -8,7 +8,11 @@
 
 ## Use
 
+### Install
+
 `yarn add compose-state` or `npm install compose-state`
+
+### Import
 
 ```jsx
 import composeState from 'compose-state';
@@ -21,19 +25,19 @@ import {
 } from 'compose-state';
 ```
 
----
+### API
 
-### `composeState([updaters])`
+#### `composeState([updaters])`
 
 Returns an updater that can be used with `setState`. Calling this produces the same result as calling or accessing each given updater from right to left, merging each partial state. If a given updater is a function, its `prevState` value is the previous state merged with the current partial state.
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | - | - | - |
 | `[updaters]` | `(...Updater)` | Functions that can be used with `setState`, or partial state objects |
 
-#### Example
+##### Example
 
 ```jsx
 // Current state: { value: 0 }
@@ -50,13 +54,11 @@ this.setState(composeState(add1, add1, add1));
 // New state: { value: 3 }
 ```
 
----
-
-### `composeDerivedStateFromProps([updaters])`
+#### `composeDerivedStateFromProps([updaters])`
 
 Returns an updater that can be set as a component's `getDerivedStateFromProps` static value. Calling this produces the same result as calling or accessing each given updater from right to left, merging each partial state. If a given updater is a function, its `prevState` value is the previous state merged with the current partial state.
 
-#### Arguments
+##### Arguments
 
 | Name      | Type   | Description |
 | --------- | ------ | ----------- |
