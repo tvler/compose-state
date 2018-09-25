@@ -15,25 +15,24 @@
   "main": "dist.js",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-jest": "^23.0.1",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-minify": "^0.4.0",
-    "babel-preset-react": "^6.24.1",
-    "jest": "^23.1.0",
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-core": "^7.0.0-bridge",
+    "babel-jest": "^23.6.0",
+    "babel-preset-minify": "^0.5.0",
+    "jest": "^23.6.0",
     "react": ">16.3",
     "react-test-renderer": ">16.3"
   },
   "scripts": {
-    "build": "BABEL_ENV=production babel index.js --out-file dist.js",
+    "build": "babel index.js --out-file dist.js",
     "test": "jest --watch test.js"
   },
   "babel": {
     "presets": [
-      "env",
       [
         "minify",
         {
@@ -42,11 +41,11 @@
           }
         }
       ],
-      "react"
+      "@babel/env",
+      "@babel/react"
     ],
     "plugins": [
-      "transform-class-properties",
-      "babel-plugin-transform-object-rest-spread"
+      "@babel/proposal-class-properties"
     ]
   }
 }
