@@ -1,1 +1,47 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=exports.composeDerivedStateFromProps=exports.composeState=void 0;function a(a){for(var c=1;c<arguments.length;c++){var d=null==arguments[c]?{}:arguments[c],e=Object.keys(d);"function"==typeof Object.getOwnPropertySymbols&&(e=e.concat(Object.getOwnPropertySymbols(d).filter(function(a){return Object.getOwnPropertyDescriptor(d,a).enumerable}))),e.forEach(function(c){b(a,c,d[c])})}return a}function b(a,b,c){return b in a?Object.defineProperty(a,b,{value:c,enumerable:!0,configurable:!0,writable:!0}):a[b]=c,a}function c(a){return f(a)||e(a)||d()}function d(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function e(a){if(Symbol.iterator in Object(a)||"[object Arguments]"===Object.prototype.toString.call(a))return Array.from(a)}function f(a){if(Array.isArray(a)){for(var b=0,c=Array(a.length);b<a.length;b++)c[b]=a[b];return c}}var g=function(b){return function(){for(var d=arguments.length,e=Array(d),f=0;f<d;f++)e[f]=arguments[f];return e.reduceRight(function(d,e){return function(){for(var f=arguments.length,g=Array(f),h=0;h<f;h++)g[h]=arguments[h];var i=d.apply(void 0,g),j=e instanceof Function?e.apply(void 0,c(g.slice(0,b)).concat([a({},g[b],i)],c(g.slice(b+1)))):e;return j||i?a({},i,j):null}},function(){return null})}},h=g(0);exports.composeState=h;var i=g(1);exports.composeDerivedStateFromProps=i;var j=h;exports.default=j;
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.composeDerivedStateFromProps = exports.composeState = void 0;
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+var composeStateFactory = function composeStateFactory(stateIndex) {
+  return function () {
+    for (var _len = arguments.length, updaters = new Array(_len), _key = 0; _key < _len; _key++) {
+      updaters[_key] = arguments[_key];
+    }
+
+    return updaters.reduceRight(function (accumulator, current) {
+      return function () {
+        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+          args[_key2] = arguments[_key2];
+        }
+
+        var accumulatedState = accumulator.apply(void 0, args);
+        var currentState = current instanceof Function ? current.apply(void 0, _toConsumableArray(args.slice(0, stateIndex)).concat([_objectSpread({}, args[stateIndex], accumulatedState)], _toConsumableArray(args.slice(stateIndex + 1)))) : current;
+        return currentState || accumulatedState ? _objectSpread({}, accumulatedState, currentState) : null;
+      };
+    }, function () {
+      return null;
+    });
+  };
+};
+
+var composeState = composeStateFactory(0);
+exports.composeState = composeState;
+var composeDerivedStateFromProps = composeStateFactory(1);
+exports.composeDerivedStateFromProps = composeDerivedStateFromProps;
+var _default = composeState;
+exports.default = _default;
