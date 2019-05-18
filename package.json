@@ -27,7 +27,7 @@
   },
   "scripts": {
     "build": "babel index.js --out-file dist.js",
-    "test": "jest --watch test.js"
+    "test": "jest"
   },
   "babel": {
     "presets": [
