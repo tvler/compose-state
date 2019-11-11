@@ -15,15 +15,15 @@
   "main": "dist.js",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.4",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
-    "@babel/preset-react": "^7.0.0",
-    "babel-jest": "^24.8.0",
-    "jest": "^24.8.0",
-    "react": ">16.3",
-    "react-test-renderer": ">16.3"
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "react": "^16.11.0",
+    "react-test-renderer": "^16.11.0"
   },
   "scripts": {
     "build": "babel index.js --out-file dist.js",
